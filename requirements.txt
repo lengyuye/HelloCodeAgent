@@ -1,2 +1,4 @@
-# 核心依赖
-hello-agents[all]>=0.2.7
+hello_agents==0.2.9
+python-dotenv==1.2.2
+tree_sitter==0.26.0
+tree_sitter_python==0.25.0

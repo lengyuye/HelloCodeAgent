@@ -89,6 +89,7 @@ if __name__ == '__main__':
 """
 
 question_normal = """审查这段代码:
+import json,os
 class Student:
     total_students = 0
 
