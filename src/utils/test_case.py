@@ -1,20 +1,6 @@
 #不需要代码切片的示例
 question_no_need_slice = """审查这段代码:
-
-      def calculate_average(scores):
-          total = 0
-          for s in scores
-              total += s              # 缩进错误（缺少冒号导致语法错误）
-          avg = total / len(scores)   # 当scores为空时会抛出ZeroDivisionError
-          return avg
-
       def main():
-          data = [85, 92, 78, 90]
-          result = calculate_average(data)
-          print(f"平均分是：{result}")
-
-          print("最高分是：", max_score)   # NameError
-
           num = 10
           text = "20"
           sum = num + text              # TypeError
@@ -148,3 +134,5 @@ def count_inversions_bruteforce(arr):
 
     return inversion_count
 """
+
+question_hello = "如何用python写个hello world"

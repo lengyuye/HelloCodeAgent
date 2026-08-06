@@ -1,0 +1,6 @@
+PRELOAD_KNOWLEDGE_PATH = "./data/code_standard.txt"
+MAX_TOKENS = 128000
+REFLECTION_OVER_FLAG  = "没有问题"
+AGENT_ANSWER_FLAG = "Finish"
+TOOL_EXEC_ERROR = "错误"
+AGENT_ERROR_FLAG = "Error"
