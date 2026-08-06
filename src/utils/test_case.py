@@ -148,3 +148,5 @@ def count_inversions_bruteforce(arr):
 
     return inversion_count
 """
+
+question_hello = "如何用python写个hello world"
