@@ -5,6 +5,7 @@ from typing import Iterator
 from hello_agents import HelloAgentsLLM, ToolRegistry, HelloAgentsException
 
 from src.Configs.config import AGENT_ANSWER_FLAG, TOOL_EXEC_ERROR
+from src.agents.hooks import HooksHelper, HooksEvents
 from src.agents.interfaces import IManager
 from src.agents.prompts import code_reviewer_prompt, code_reviewer_again_prompt
 
@@ -17,6 +18,10 @@ class CodeReviewAgent:
         self.history = []
         #缓存搜索结果
         self.cache_search_result = ""
+
+        #注册hook
+        self.hooks_helper = HooksHelper()
+        self.hooks_helper.register_hook(HooksEvents.PRE_TOOL_USE,self.log_hook)
 
     def run_react(self, question: str, code_only: str,manager: IManager)->str:
         """运行代码审查Agent_ReAct模式"""
@@ -65,6 +70,7 @@ class CodeReviewAgent:
 
             print(f"🎬 行动: {tool_name}[{tool_input[:50]}...]")
             tool_response = ""
+            self.hooks_helper.trigger_hooks(HooksEvents.PRE_TOOL_USE, tool_name, tool_input)
             if tool_name == "my_code_slicer":
                 tool_response = self.registry.execute_tool(tool_name, tool_input)
                 if tool_response.startswith(TOOL_EXEC_ERROR):
@@ -93,6 +99,12 @@ class CodeReviewAgent:
             return response_text, None
         except HelloAgentsException as e:
             return "", str(e)
+
+
+    def log_hook(self,tool_name: str, tool_input: str):
+        """PreToolUse: log every tool call."""
+        print(f"\033[90m[HOOK] [PreToolUse] {tool_name}({tool_input[:20]})\033[0m")
+        return None
 
     @staticmethod
     def _count_tokens_by_chars(text: str) -> int:
